@@ -1,1 +1,1 @@
-pub mod pointmap;
+pub mod map;

@@ -249,10 +249,10 @@ impl Display for Rectangle {
     }
 }
 
-impl Into<imageproc::rect::Rect> for Rectangle {
-    fn into(self) -> imageproc::rect::Rect {
-        imageproc::rect::Rect::at(self.position.0 as i32, self.position.1 as i32)
-            .of_size(self.width as u32, self.height as u32)
+impl From<Rectangle> for imageproc::rect::Rect {
+    fn from(val: Rectangle) -> Self {
+        imageproc::rect::Rect::at(val.position.0 as i32, val.position.1 as i32)
+            .of_size(val.width as u32, val.height as u32)
     }
 }
 

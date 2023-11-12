@@ -39,9 +39,9 @@ impl Display for Color {
     }
 }
 
-impl Into<image::Rgb<u8>> for Color {
-    fn into(self) -> image::Rgb<u8> {
-        match self {
+impl From<Color> for image::Rgb<u8> {
+    fn from(val: Color) -> Self {
+        match val {
             Color::Hex(color) => {
                 let color = color.trim_start_matches('#');
                 let r = u8::from_str_radix(&color[0..2], 16).unwrap();

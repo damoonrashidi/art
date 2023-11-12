@@ -1,6 +1,6 @@
 use art::{
     palette::color::Color,
-    pointmap::pointmap::Pointmap,
+    pointmap::map::Pointmap,
     shapes::{
         circle::Circle, path::Path, path_style::PathStyle, point::Point, rectangle::Rectangle,
         shape::Shape,
@@ -21,8 +21,7 @@ fn main() {
         Color::HSLa(37, 80.0, 97.0, 1.0).into(),
     );
 
-    let spheres = (0..4)
-        .into_iter()
+    let spheres: Vec<Circle> = (0..4)
         .map(|_| {
             Circle::new(
                 Point(
@@ -32,14 +31,13 @@ fn main() {
                 rng.gen_range(bounds.width * 0.1..bounds.width * 0.4),
             )
         })
-        .collect::<Vec<Circle>>();
+        .collect();
 
     let mut points = vec![];
     let mut rng = rand::thread_rng();
     let mut pointmap = Pointmap::new(&bounds, &mut points, 2);
 
     let rects = (0..4)
-        .into_iter()
         .map(|i| {
             Rectangle::new(
                 Point(
@@ -74,7 +72,7 @@ fn main() {
 
     let style = PathStyle::new()
         .stroke_weight(1.0)
-        .stroke(Color::HSLa(37, 80.0, 55.0, 0.1));
+        .stroke(Some(Color::HSLa(37, 80.0, 55.0, 0.1)));
 
     pointmap.points().iter().for_each(|point| {
         let neighbors = pointmap.get_neighbors(point, Some(40.0));

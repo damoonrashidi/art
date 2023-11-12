@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use crate::palette::color::Color;
 
 /// A style for a given [`Path`], it can specify fill, stroke color and stroke width
@@ -16,7 +18,30 @@ pub struct PathStyle {
     /// The fill color of this path
     ///
     /// [Docs](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill)
-    pub color: Option<Color>,
+    pub fill: Option<Color>,
+
+    /// The fill rule of this path
+    ///
+    /// [Docs](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule)
+    pub fill_rule: FillRule,
+}
+
+#[derive(Debug, Default, Clone, Copy)]
+pub enum FillRule {
+    #[default]
+    EvenOdd,
+    NonZero,
+}
+
+impl Display for FillRule {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let rule = match self {
+            FillRule::EvenOdd => "evenodd",
+            FillRule::NonZero => "nonzero",
+        };
+
+        write!(f, "{}", rule)
+    }
 }
 
 impl PathStyle {
@@ -29,13 +54,18 @@ impl PathStyle {
         *self
     }
 
-    pub fn stroke(&mut self, color: Color) -> PathStyle {
-        self.stroke = Some(color);
+    pub fn stroke(&mut self, color: Option<Color>) -> PathStyle {
+        self.stroke = color;
         *self
     }
 
-    pub fn color(&mut self, color: Color) -> PathStyle {
-        self.color = Some(color);
+    pub fn fill(&mut self, color: Option<Color>) -> PathStyle {
+        self.fill = color;
+        *self
+    }
+
+    pub fn fill_rule(&mut self, rule: FillRule) -> PathStyle {
+        self.fill_rule = rule;
         *self
     }
 }

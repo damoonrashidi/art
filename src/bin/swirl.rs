@@ -1,6 +1,6 @@
 use art::{
     palette::palettes,
-    pointmap::pointmap::Pointmap,
+    pointmap::map::Pointmap,
     shapes::{path::Path, path_style::PathStyle, point::Point, rectangle::Rectangle, shape::Shape},
     svg::document::Document,
 };
@@ -18,7 +18,7 @@ fn main() {
 
     for _ in 0..500 {
         let style = PathStyle::new()
-            .stroke(palette.get_random_color().unwrap())
+            .stroke(Some(palette.get_random_color().unwrap()))
             .stroke_weight(10.0);
         let mut path = Path::new(vec![], style);
         let mut x = rng.gen_range(bounds.x_range());
@@ -29,7 +29,7 @@ fn main() {
 
             let neighbors = pointmap.get_neighbors(&point, Some(20.));
 
-            if neighbors.len() > 0 {
+            if !neighbors.is_empty() {
                 break;
             }
 

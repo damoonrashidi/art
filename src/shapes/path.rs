@@ -1,4 +1,9 @@
-use super::{path_style::PathStyle, point::Point, rectangle::Rectangle, shape::Shape};
+use super::{
+    path_style::{FillRule, PathStyle},
+    point::Point,
+    rectangle::Rectangle,
+    shape::Shape,
+};
 
 /// An SVG path
 #[derive(Debug, Clone)]
@@ -75,7 +80,7 @@ impl Shape for Path {
             None => "".to_string(),
         };
 
-        let fill: String = match self.style.color {
+        let fill: String = match self.style.fill {
             Some(color) => format!("fill=\"{color}\" "),
             None => "fill=\"none\" ".to_string(),
         };
@@ -85,10 +90,15 @@ impl Shape for Path {
             None => "".to_string(),
         };
 
+        let fill_rule: String = match self.style.fill_rule {
+            FillRule::EvenOdd => String::from(""),
+            FillRule::NonZero => String::from("fill-rule=\"nonzero\" "),
+        };
+
         if let Some(first) = self.points.first() {
             let mut str = self.points.iter().skip(1).enumerate().fold(
                 format!(
-                    "<path {fill}{stroke}{stroke_weight}d=\"M{:.2},{:.2}",
+                    "<path {fill}{fill_rule}{stroke}{stroke_weight}d=\"M{:.2},{:.2}",
                     first.0, first.1
                 ),
                 |mut path, (i, point)| {

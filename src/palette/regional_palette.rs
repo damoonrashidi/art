@@ -44,7 +44,7 @@ impl<const N: usize> Palette for WeightedPalette<N> {
             .map(|color| color.1)
             .collect::<Vec<usize>>();
 
-        let dist = if let Ok(dist) = WeightedIndex::new(&weights) {
+        let dist = if let Ok(dist) = WeightedIndex::new(weights) {
             dist
         } else {
             return None;

@@ -3,9 +3,8 @@ use art::{
     shapes::{point::Point, rectangle::Rectangle},
     svg::document::Document,
 };
-use noise::NoiseFn;
-use rand::Rng;
 
+#[allow(unused)]
 fn main() {
     let bounds =
         Rectangle::new(Point(0., 0.), 1000., 1400.0).set_color(Color::HSLa(35, 65., 97., 1.));
@@ -18,8 +17,4 @@ fn main() {
     doc.add_shape(Box::new(bounds));
 
     doc.save();
-}
-
-fn generate_block_series() -> Vec<Rectangle> {
-    vec![]
 }
